@@ -1,0 +1,237 @@
+/* Custom Styles for Weather Dashboard */
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    color: #e5e7eb;
+}
+
+body.dark-mode header {
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+}
+
+body.dark-mode .bg-white {
+    background-color: #1f2937 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .text-gray-800 {
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .text-gray-700 {
+    color: #d1d5db !important;
+}
+
+body.dark-mode .text-gray-600 {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .text-gray-500 {
+    color: #6b7280 !important;
+}
+
+body.dark-mode .bg-blue-50,
+body.dark-mode .bg-green-50,
+body.dark-mode .bg-purple-50,
+body.dark-mode .bg-yellow-50 {
+    background-color: #374151 !important;
+}
+
+body.dark-mode .shadow-lg,
+body.dark-mode .shadow-md {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode input[type="text"] {
+    background-color: #374151;
+    color: #e5e7eb;
+    border: 1px solid #4b5563;
+}
+
+body.dark-mode input[type="text"]::placeholder {
+    color: #9ca3af;
+}
+
+body.dark-mode .hover\:bg-blue-50:hover {
+    background-color: #374151 !important;
+}
+
+body.dark-mode .bg-gradient-to-r {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%) !important;
+}
+
+/* Weather Background Animations */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: background 0.5s ease;
+}
+
+body.weather-clear {
+    background: linear-gradient(135deg, #FDB99B 0%, #FFE19C 50%, #87CEEB 100%);
+}
+
+body.weather-few-clouds {
+    background: linear-gradient(135deg, #89CFF0 0%, #E0E0E0 100%);
+}
+
+body.weather-clouds {
+    background: linear-gradient(135deg, #B0B0B0 0%, #707070 100%);
+}
+
+body.weather-rain {
+    background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%);
+}
+
+body.weather-thunderstorm {
+    background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+}
+
+body.weather-snow {
+    background: linear-gradient(135deg, #E0E0E0 0%, #F7F7F7 100%);
+}
+
+body.weather-mist {
+    background: linear-gradient(135deg, #C0C0C0 0%, #E0E0E0 100%);
+}
+
+body.weather-default {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+}
+
+.animate-fade-out {
+    animation: fade-out 0.3s ease-out;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a {
+    transition: all 0.2s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Loading spinner enhancement */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Weather icon hover effect */
+img[alt*="weather"] {
+    transition: transform 0.3s ease;
+}
+
+img[alt*="weather"]:hover {
+    transform: scale(1.1);
+}
+
+/* Card hover effects */
+.hover\:shadow-lg:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    header, footer, aside {
+        display: none;
+    }
+    
+    body {
+        background: white;
+    }
+}
+
+/* Accessibility: Focus styles */
+button:focus,
+input:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Animation for weather cards */
+#forecast > div > div > div {
+    animation: fade-in 0.5s ease-out;
+}
+
+#forecast > div > div > div:nth-child(1) { animation-delay: 0.1s; }
+#forecast > div > div > div:nth-child(2) { animation-delay: 0.2s; }
+#forecast > div > div > div:nth-child(3) { animation-delay: 0.3s; }
+#forecast > div > div > div:nth-child(4) { animation-delay: 0.4s; }
+#forecast > div > div > div:nth-child(5) { animation-delay: 0.5s; }
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 50;
+}
+
+/* Error message styling */
+#error {
+    animation: fade-in 0.3s ease-out;
+}
+
+/* Welcome section */
+#welcome {
+    animation: fade-in 0.5s ease-out;
+}

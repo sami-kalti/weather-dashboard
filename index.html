@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Dashboard - Get real-time weather information for any city">
+    <title>Weather Dashboard</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen transition-colors duration-500">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold">🌤️ Weather Dashboard</h1>
+                    <p class="text-blue-100 text-sm mt-1">Real-time weather information worldwide</p>
+                </div>
+                
+                <!-- Search Form -->
+                <form id="search-form" class="flex gap-2 w-full md:w-auto">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Enter city name..." 
+                        class="px-4 py-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full md:w-64"
+                        autocomplete="off"
+                    >
+                    <button 
+                        type="submit" 
+                        class="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    >
+                        Search
+                    </button>
+                    <button 
+                        type="button" 
+                        id="unit-toggle" 
+                        data-units="metric"
+                        class="bg-blue-400 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-500 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
+                        title="Toggle temperature units"
+                    >
+                        °C
+                    </button>
+                    <button 
+                        type="button" 
+                        id="dark-mode-toggle" 
+                        class="bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+                        title="Toggle dark mode"
+                    >
+                        🌙
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 space-y-6">
+                <!-- Search History -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">📝 Recent Searches</h2>
+                    <div id="search-history" class="space-y-2">
+                        <p class="text-gray-500 text-sm">No recent searches</p>
+                    </div>
+                </div>
+                
+                <!-- Favorites -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">⭐ Favorites</h2>
+                    <div id="favorites" class="space-y-2">
+                        <p class="text-gray-500 text-sm">No favorite cities</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Weather Content -->
+            <div class="lg:col-span-3 space-y-6">
+                <!-- Loading State -->
+                <div id="loading" class="hidden">
+                    <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                        <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                        <p class="text-gray-600 mt-4 text-lg">Loading weather data...</p>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="error" class="hidden">
+                    <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6">
+                        <div class="flex items-start">
+                            <div class="text-3xl mr-4">⚠️</div>
+                            <div>
+                                <h3 class="text-red-800 font-bold text-lg mb-2">Error</h3>
+                                <p id="error-message" class="text-red-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Weather -->
+                <div id="current-weather" class="hidden"></div>
+
+                <!-- Temperature Chart -->
+                <div id="chart-container" class="hidden bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">📈 5-Day Temperature Trend</h3>
+                    <canvas id="temperature-chart"></canvas>
+                </div>
+
+                <!-- 5-Day Forecast -->
+                <div id="forecast" class="hidden"></div>
+
+                <!-- Welcome Message -->
+                <div id="welcome" class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg shadow-lg p-8 text-center">
+                    <div class="text-6xl mb-4">🌍</div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome to Weather Dashboard</h2>
+                    <p class="text-gray-600 mb-6">Enter a city name above to get started</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <button class="quick-city bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors" data-city="London">London</button>
+                        <button class="quick-city bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors" data-city="New York">New York</button>
+                        <button class="quick-city bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors" data-city="Tokyo">Tokyo</button>
+                        <button class="quick-city bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors" data-city="Paris">Paris</button>
+                        <button class="quick-city bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors" data-city="Dubai">Dubai</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-300">Weather data provided by <a href="https://openweathermap.org/" target="_blank" class="text-blue-400 hover:text-blue-300 underline">OpenWeatherMap</a></p>
+            <p class="text-gray-400 text-sm mt-2">Built with HTML5, CSS3, JavaScript & Tailwind CSS</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Module -->
+    <script type="module" src="js/app.js"></script>
+    
+    <!-- Quick city search functionality -->
+    <script>
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quick-city')) {
+                const city = e.target.getAttribute('data-city');
+                document.getElementById('search-input').value = city;
+                document.getElementById('search-form').dispatchEvent(new Event('submit'));
+                document.getElementById('welcome').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
