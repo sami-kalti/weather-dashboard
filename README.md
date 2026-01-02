@@ -2,6 +2,8 @@
 
 This is my project for the Introduction to Web Technologies course. It's a weather app that lets you check the weather in different cities around the world.
 
+**Live Demo:** https://sami-kalti.github.io/weather-dashboard/
+
 ## What it does
 
 - Search for weather in any city
